@@ -1,0 +1,21 @@
+{
+  "goodsList": {
+    "status": 0,
+    "result": [
+      {
+        "id": 1,
+        "product": "相机"
+      },
+      {
+        "id": 2,
+        "product": "手机"
+      }
+    ]
+  },
+  "goodsTotal": {
+    "status": 0,
+    "result": {
+      "total": 100
+    }
+  }
+}
