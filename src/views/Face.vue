@@ -37,7 +37,7 @@ export default {
       letter-spacing: 0.5rem;
     }
     p {
-      font-size: 1.5rem;
+      font-size: 2rem;
       line-height: 3rem;
       font-weight: normal;
       // font-family: 'fzssjt';

@@ -1,26 +1,38 @@
 <template>
   <div class="root">
-    <el-row :gutter="0">
+    <el-row :gutter="20">
       <el-col :span="5" :push="1">
-        <ul class="directory">
-          <el-scrollbar height="35rem">
-            <li
-              v-for="(item, index) in titles"
-              :key="item.label"
-              @click="handleNodeClick(item, $event)"
-            >
-              {{ index + 1 }}.{{ item.label }}
-            </li>
+        <el-card>
+          <el-input v-model="filterText" placeholder="Filter keyword" />
+          <el-divider></el-divider>
+          <el-scrollbar style="height: 30rem">
+            <el-tree
+              ref="treeRef"
+              :data="titles"
+              :props="defaultProps"
+              @node-click="handleNodeClick"
+              :highlight-current="true"
+              :filter-node-method="filterNode"
+            />
           </el-scrollbar>
-        </ul>
+        </el-card>
       </el-col>
-      <el-col :span="16">markdown文本展示</el-col>
+      <el-col :span="16" :push="1">
+        <el-card style="min-height: 60rem">
+          <v-md-editor
+            v-model="content"
+            height="400px"
+            mode="preview"
+            right-toolbar="toc"
+          ></v-md-editor>
+        </el-card>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, toRefs, watch, ref } from 'vue'
 export default {
   data() {
     return {}
@@ -45,19 +57,17 @@ export default {
         { label: '前端大文件下载', children: null },
         { label: '树状结构展示', children: null },
         { label: '前端大文件下载', children: null },
+        { label: '树状结构展示', children: null },
+        { label: '前端大文件下载', children: null },
+        { label: '树状结构展示', children: null },
+        { label: 'vue3使用注意事项', children: null },
+        { label: '前端大文件下载', children: null },
+        { label: '树状结构展示', children: null },
+        { label: '前端大文件下载', children: null },
         { label: '树状结构展示', children: null }
       ],
-      handleNodeClick: function (item, e) {
-        // console.log('点击节点,参数为:', item, [e.target])
-        let node = e.target
-        directory.activeNode = node
-        node.classList.add('active')
-        node.parentNode.childNodes.forEach((value, index, array) => {
-          if (value != node && value.nodeName == 'LI') {
-            value.classList.remove('active')
-            // console.log('node', [value])
-          }
-        })
+      handleNodeClick: function (item) {
+        console.log(item)
       },
       defaultProps: {
         children: 'children',
@@ -67,10 +77,27 @@ export default {
       append: function (data) {
         console.log('append:', data)
       },
-      activeNode: null
+      activeNode: null,
+      treeRef: null,
+      filterText: '',
+      filterNode: (value, data) => {
+        if (!value) return true
+        return data.label.includes(value)
+      }
     })
+    // const filterText = ref('')
+    watch(
+      () => directory.filterText,
+      (val) => {
+        console.log(val)
+        directory.treeRef.filter(val)
+      }
+    )
+    const content = ref('### 标题Title')
     return {
-      ...toRefs(directory)
+      ...toRefs(directory),
+      content
+      // filterText
     }
   }
 }
@@ -78,7 +105,7 @@ export default {
 
 <style lang="less" scoped>
 .root {
-  border: 1px solid #000;
+  // border: 1px solid #000;
 }
 .custom-node > .el-tree-node__content {
   color: #626aef;
@@ -99,5 +126,16 @@ ul.directory {
   .active {
     font-weight: bold;
   }
+}
+</style>
+<style lang="less">
+.custom-node .el-tree-node__content {
+  height: auto;
+}
+.custom-node .el-tree-node__content .el-tree-node__label {
+  display: inline-block;
+  line-height: 2.5rem;
+  color: #626aef;
+  font-size: 1rem !important;
 }
 </style>
