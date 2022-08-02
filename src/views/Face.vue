@@ -1,8 +1,8 @@
 <template>
   <div class="root">
     <div class="title">
-      <h2>了了子</h2>
-      <p>记录一些坑和自己写的工具函数和组件等</p>
+      <h2>丁同亚</h2>
+      <p>专精前端开发.扎实的计算机理论知识</p>
     </div>
     <el-divider />
     <div class="shower">
@@ -40,7 +40,8 @@ export default {
       font-size: 1.5rem;
       line-height: 3rem;
       font-weight: normal;
-      font-family: 'fzssjt';
+      // font-family: 'fzssjt';
+      font-family: 'FZ_hfxs_J';
       // font-style: italic;
       // text-indent: 8rem;
     }
